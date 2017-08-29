@@ -1,12 +1,20 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import "./bootstrap.min.css";
 import Header from './components/Header';
+const logoLarge = require('./img/KPFIRE.png');
 
 class App extends Component {
   render() {
     return (
-      <Header />
+      <div>
+        <Header />
+        <div className="content">
+          <div className="logo">
+            <img src={logoLarge} alt="KP FIRE" />
+          </div>
+        </div>
+      </div>
     );
   }
 }

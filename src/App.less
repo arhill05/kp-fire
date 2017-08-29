@@ -8,24 +8,48 @@
 
 .header {
     background-color: @primary-blue;
-    position: fixed;
-    top: 0;
-    right: 0;
-    left: 0;
+    position: sticky;
     height: 6vh;
+    box-shadow: 0 2px 3px 0 rgba(10,10,10,0.2),
+                0 0 0 1px rgba(10,10,10,0.2);
+}
 
-    .logo-wrapper {
-        width: 6%;
-        height: 100%;
-        background-color: @white;
+.content {
+    margin-top: 6vh;
+}
 
-        img {
-            position: absolute;
-            margin: auto;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-        }
+.brand-logo {
+    width: 6%;
+    height: 100%;
+    background-color: @white;
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    img {
+        margin: auto;
+        height: 75%;
+        width: 85%;
+    }
+}
+
+.logo {
+    width: 100%;
+    display: flex;
+    margin-top: 8vh;
+    align-items: center;
+    img {
+        width: 33%;
+        margin: 0 auto;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .brand-logo {
+        display:none;
+    }
+
+    .logo img {
+        width: 75%;
     }
 }

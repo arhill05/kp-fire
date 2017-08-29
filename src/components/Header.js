@@ -10,7 +10,7 @@ class Header extends Component {
   render() {
     return (
         <div className="header">
-          <div className="logo-wrapper"><img src={logo} alt="KP"/></div>
+          <div className="brand-logo"><img src={logo} alt="KP"/></div>
         </div>
     );
   }
