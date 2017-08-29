@@ -1,0 +1,21 @@
+.header {
+  background-color: #4A80B4;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 6vh;
+}
+.header .logo-wrapper {
+  width: 6%;
+  height: 100%;
+  background-color: #fcfcfc;
+}
+.header .logo-wrapper img {
+  position: absolute;
+  margin: auto;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
