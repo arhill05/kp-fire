@@ -1,3 +1,4 @@
+@base-font-size: 16px;
 @white: #fcfcfc;
 @black: #111111;
 @primary-blue: #4A80B4;
@@ -5,17 +6,93 @@
 @grey: #5C6F81;
 @coral: #E79682;
 @red: #B4504A;
+@box-shadow-base: 0 2px 3px 0 rgba(10, 10, 10, 0.2),
+0 0 0 1px rgba(10, 10, 10, 0.2);
+body {
+    background-color: @grey;
+    font-size: @base-font-size;
+}
+
+h1,
+h2,
+h3 {
+    color: @primary-blue;
+}
+
+ul,
+ol {
+    margin: 0;
+    padding: 0;
+}
+
+.mobile-nav {
+    display: none;
+}
 
 .header {
+    display: flex;
     background-color: @primary-blue;
-    position: sticky;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
     height: 6vh;
-    box-shadow: 0 2px 3px 0 rgba(10,10,10,0.2),
-                0 0 0 1px rgba(10,10,10,0.2);
+    box-shadow: @box-shadow-base;
+    .nav-links {
+        padding: 0;
+        list-style: none;
+        li {
+            cursor: pointer;
+            height: 100%;
+            color: @white;
+            font-weight: bold;
+            display: inline-block;
+            padding: 16px;
+            &.active {
+                background-color: darken(@primary-blue, 20%);
+            }
+            &:hover {
+                background-color: darken(@primary-blue, 10%);
+            }
+        }
+    }
 }
 
 .content {
-    margin-top: 6vh;
+    padding: 32px;
+    background-color: @white;
+    box-shadow: @box-shadow-base;
+    display: grid;
+    grid-template-areas: "carousel about" "news news" "news news";
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 64px;
+    grid-row-gap: 16px;
+    margin: 0 auto 12vh auto;
+    width: 80%;
+}
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px;
+    width: 100%;
+    height: 4vh;
+    background-color: @primary-blue;
+    color: @white;
+    .copyright {
+    }
+    .social-media {
+        float: right;
+        margin-right: 8px;
+        a {
+            color: @white;
+            &:hover {
+                font-size: 18px;
+            }
+        }
+    }
 }
 
 .brand-logo {
@@ -25,7 +102,6 @@
     position: relative;
     display: flex;
     align-items: center;
-
     img {
         margin: auto;
         height: 75%;
@@ -34,22 +110,173 @@
 }
 
 .logo {
-    width: 100%;
+    margin: 12vh 0 6vh 0;
+    grid-area: logo;
     display: flex;
-    margin-top: 8vh;
     align-items: center;
+    width: 100%;
     img {
         width: 33%;
         margin: 0 auto;
     }
 }
 
-@media screen and (max-width: 768px) {
-    .brand-logo {
-        display:none;
+#carousel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    grid-area: carousel;
+    width: 100%;
+    height: 42vh;
+    img {
+        box-shadow: @box-shadow-base;
+        margin: auto;
+        max-width: 100%;
+        max-height: 40vh;
     }
+}
 
+.about {
+    grid-area: about;
+}
+
+.news {
+    h2 {
+        font-size: @base-font-size * 2.5;
+        text-align: center;
+    }
+    grid-area: news;
+    .news-post {
+        margin: 16px;
+        width: 46%;
+        display: inline-block;
+        .post-heading {
+            .post-date {
+                color: @grey;
+                font-style: italic;
+                float: right;
+            }
+        }
+    }
+}
+
+.carousel-indicators {
+    margin-top: -32px;
+    display: block;
+    li {
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        margin: 4px;
+        border: 1px solid @black;
+        border-radius: 10px;
+        &.active {
+            border: 2px solid @primary-blue;
+        }
+    }
+}
+
+@media screen and (max-width: 768px) {
+    h1,
+    h2,
+    h3 {
+        text-align: center;
+    }
+    #carousel {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        border: none;
+        ol {
+            margin: 0;
+            padding: 0;
+        }
+        img {
+            max-height: 40vh;
+            transition: all 0.5s ease;
+        }
+    }
+    .brand-logo {
+        width: 25%
+    }
+    .mobile-nav {
+        position: absolute;
+        top: 25%;
+        right: 8px;
+        color: @white;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        font-size: 12px;
+        .menu {
+            border: none;
+            box-shadow: 0 3px 3px 0 rgba(10, 10, 10, 0.2), 0 1px 0 1px rgba(10, 10, 10, 0.2);
+            position: fixed;
+            top: 8vh;
+            right: 0;
+            opacity: 0;
+            text-align: right;
+            transition: 0.1s ease-in;
+            ul {
+                list-style: none;
+                background-color: @primary-blue;
+                margin: 0;
+                li {
+                    font-size: 14px;
+                    padding: 16px;
+                    &.active {
+                        background-color: darken(@primary-blue, 20%);
+                    }
+                }
+            }
+        }
+        .expand {
+            transition: all 0.1s ease;
+            opacity: 1 !important;
+        }
+        .menu-indicator {
+            display: inline-block;
+            margin-left: 8px;
+        }
+        span {
+            display: block;
+            height: 3px;
+            width: 24px;
+            background-color: @white;
+            margin: 4px;
+        }
+    }
     .logo img {
         width: 75%;
+    }
+    .header {
+        height: 8vh;
+        .nav-links {
+            display: none;
+        }
+    }
+    .content {
+        width: 96%;
+        padding: 16px;
+        grid-template-areas: "about" "carousel" "news";
+        grid-template-rows: 1fr;
+        grid-template-columns: 1fr;
+        grid-column-gap: 16px;
+        grid-row-gap: 16px;
+    }
+    .news {
+        .news-post {
+            width: 90%;
+            display: block;
+            .post-heading {
+                .post-date {
+                    display: none;
+                }
+            }
+        }
+    }
+
+    .footer {
+        height: 8vh;
     }
 }
