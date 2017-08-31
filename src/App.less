@@ -81,8 +81,7 @@ ol {
     height: 4vh;
     background-color: @primary-blue;
     color: @white;
-    .copyright {
-    }
+    .copyright {}
     .social-media {
         float: right;
         margin-right: 8px;
@@ -140,6 +139,12 @@ ol {
     grid-area: about;
 }
 
+.news-container {
+    display: grid;
+    grid-template-areas: "area1 area2" "area3 area4";
+    grid-template-columns:  1fr 1fr;
+}
+
 .news {
     h2 {
         font-size: @base-font-size * 2.5;
@@ -147,8 +152,20 @@ ol {
     }
     grid-area: news;
     .news-post {
+        &.post-1 {
+            grid-area: area1;
+        }
+        &.post-2 {
+            grid-area: area2;
+        }
+        &.post-3 {
+            grid-area: area3;
+        }
+        &.post-4 {
+            grid-area: area4;
+        }
         margin: 16px;
-        width: 46%;
+        // width: 46%;
         display: inline-block;
         .post-heading {
             .post-date {
@@ -275,7 +292,6 @@ ol {
             }
         }
     }
-
     .footer {
         height: 8vh;
     }

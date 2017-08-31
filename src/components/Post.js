@@ -1,15 +1,17 @@
-import React from "react";
+import React, {Component} from "react";
 
-const Post = ({post}) => {
-    return (
-        <div className="news-post">
-            <div className="post-heading">
-                <span className="post-date">Posted by {post.author} on {post.date}</span>
-                <h3>{post.title}</h3>
+class Post extends Component {
+    render() {
+        return (
+            <div className={"news-post post-" + (this.props.index + 1)}>
+                <div className="post-heading">
+                    <span className="post-date">Posted by {this.props.post.author} on {this.props.post.date}</span>
+                    <h3>{this.props.post.title}</h3>
+                </div>
+                <p className="post-content">{this.props.post.content}</p>
             </div>
-            <p className="post-content">{post.content}</p>
-        </div>
-    );
+        );
+    }
 }
 
 export default Post;

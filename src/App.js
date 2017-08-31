@@ -1,86 +1,50 @@
 import React, {Component} from 'react';
+import 'whatwg-fetch';
 import "./bootstrap.min.css";
 import './App.css';
 import '../node_modules/font-awesome/css/font-awesome.min.css';
 import Header from './components/Header';
 import Carousel from './components/Carousel';
 import Post from './components/Post'
+import PostModel from './models/post'
 const logoLarge = require('./img/KPFIRE.png');
 
 class App extends Component {
   constructor() {
     super()
     this.state = {
-      posts: [
-        {
-          title: 'News Post 1',
-          date: '8/30/2017',
-          author: 'Jane Doe',
-          content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc at nisl dui.
-        Aliquam euismod interdum quam vitae faucibus. Ut vitae diam enim. Aliquam ut
-        ornare est. In augue purus, tempor vitae eleifend vitae, tempus ut est.
-        Pellentesque dapibus velit sit amet nibh sagittis, sed pellentesque dolor
-        aliquet. Aenean placerat tristique pretium. Phasellus tempus mattis sem sed
-        placerat. Duis vulputate suscipit orci, non blandit libero interdum in. Duis
-        ultricies volutpat dui. Etiam magna felis, ullamcorper eu arcu non, congue
-        rhoncus nisl. Cras ornare mauris dolor, quis commodo ipsum vestibulum sit amet.
-        In et nunc id magna rutrum ultricies porttitor at sapien. Sed ac nulla non diam
-        tincidunt fermentum.`
-        }, {
-          title: 'News Post 2',
-          date: '8/30/2017',
-          author: 'Jane Doe',
-          content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc at nisl dui.
-        Aliquam euismod interdum quam vitae faucibus. Ut vitae diam enim. Aliquam ut
-        ornare est. In augue purus, tempor vitae eleifend vitae, tempus ut est.
-        Pellentesque dapibus velit sit amet nibh sagittis, sed pellentesque dolor
-        aliquet. Aenean placerat tristique pretium. Phasellus tempus mattis sem sed
-        placerat. Duis vulputate suscipit orci, non blandit libero interdum in. Duis
-        ultricies volutpat dui. Etiam magna felis, ullamcorper eu arcu non, congue
-        rhoncus nisl. Cras ornare mauris dolor, quis commodo ipsum vestibulum sit amet.
-        In et nunc id magna rutrum ultricies porttitor at sapien. Sed ac nulla non diam
-        tincidunt fermentum.`
-        }, {
-          title: 'News Post 3',
-          date: '8/30/2017',
-          author: 'Jane Doe',
-          content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc at nisl dui.
-        Aliquam euismod interdum quam vitae faucibus. Ut vitae diam enim. Aliquam ut
-        ornare est. In augue purus, tempor vitae eleifend vitae, tempus ut est.
-        Pellentesque dapibus velit sit amet nibh sagittis, sed pellentesque dolor
-        aliquet. Aenean placerat tristique pretium. Phasellus tempus mattis sem sed
-        placerat. Duis vulputate suscipit orci, non blandit libero interdum in. Duis
-        ultricies volutpat dui. Etiam magna felis, ullamcorper eu arcu non, congue
-        rhoncus nisl. Cras ornare mauris dolor, quis commodo ipsum vestibulum sit amet.
-        In et nunc id magna rutrum ultricies porttitor at sapien. Sed ac nulla non diam
-        tincidunt fermentum.`
-        }, {
-          title: 'News Post 4',
-          date: '8/30/2017',
-          author: 'John Doe',
-          content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc at nisl dui.
-        Aliquam euismod interdum quam vitae faucibus. Ut vitae diam enim. Aliquam ut
-        ornare est. In augue purus, tempor vitae eleifend vitae, tempus ut est.
-        Pellentesque dapibus velit sit amet nibh sagittis, sed pellentesque dolor
-        aliquet. Aenean placerat tristique pretium. Phasellus tempus mattis sem sed
-        placerat. Duis vulputate suscipit orci, non blandit libero interdum in. Duis
-        ultricies volutpat dui. Etiam magna felis, ullamcorper eu arcu non, congue
-        rhoncus nisl. Cras ornare mauris dolor, quis commodo ipsum vestibulum sit amet.
-        In et nunc id magna rutrum ultricies porttitor at sapien. Sed ac nulla non diam
-        tincidunt fermentum.`
-        }
-      ]
+      posts: []
     }
   }
 
-  componentDidMount() {}
+  componentDidMount = () => {
+    fetch('http://dev.andrewhill.io/wordpress/wp-json/wp/v2/posts/?per_page=4')
+      .then(function (res) {
+        return res.json()
+      })
+      .then(json => {
+        let posts = [];
+        json.forEach(post => {
+          fetch('http://dev.andrewhill.io/wordpress/wp-json/wp/v2/users/' + post.author).then(response => {
+            return response.json()
+          }).then(json => {
+            return posts.push(new PostModel(post.title.rendered, post.date, json.name, post.content.rendered));
+          }).then(() => {
+            this.setState({posts});
+          })
+        })
+      })
+  }
 
   render() {
     const posts = this
       .state
       .posts
-      .map((post) => {
-        return <Post post={post}/>
+      .sort((a, b) => {
+        return new Date(b.date) - new Date(a.date);
+      })
+      .map((post, index) => {
+        return <Post index={index} key={index} post={post}/>
       })
     return (
       <div>
@@ -105,7 +69,9 @@ class App extends Component {
           </div>
           <div className="news">
             <h2>News</h2>
-            {posts}
+            <div className="news-container">
+              {posts}
+            </div>
           </div>
         </div>
         <div className="footer">
