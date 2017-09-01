@@ -41,7 +41,7 @@ ol {
     .nav-links {
         padding: 0;
         list-style: none;
-        li {
+        a {
             cursor: pointer;
             height: 100%;
             color: @white;
@@ -53,6 +53,7 @@ ol {
             }
             &:hover {
                 background-color: darken(@primary-blue, 10%);
+                text-decoration: none;
             }
         }
     }
@@ -62,12 +63,6 @@ ol {
     padding: 32px;
     background-color: @white;
     box-shadow: @box-shadow-base;
-    display: grid;
-    grid-template-areas: "carousel about" "news news" "news news";
-    grid-template-rows: 1fr 1fr 1fr;
-    grid-template-columns: 1fr 1fr;
-    grid-column-gap: 64px;
-    grid-row-gap: 16px;
     margin: 0 auto 12vh auto;
     width: 80%;
 }
@@ -120,6 +115,15 @@ ol {
     }
 }
 
+.home {
+    display: grid;
+    grid-template-areas: "carousel about" "news news" "news news";
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 64px;
+    grid-row-gap: 16px;
+}
+
 #carousel {
     display: flex;
     flex-direction: column;
@@ -141,8 +145,8 @@ ol {
 
 .news-container {
     display: grid;
-    grid-template-areas: "area1 area2" "area3 area4";
-    grid-template-columns:  1fr 1fr;
+    grid-template-areas: "post-1 post-2" "post-3 post-4";
+    grid-template-columns: 1fr 1fr;
 }
 
 .news {
@@ -153,19 +157,18 @@ ol {
     grid-area: news;
     .news-post {
         &.post-1 {
-            grid-area: area1;
+            grid-area: post-1;
         }
         &.post-2 {
-            grid-area: area2;
+            grid-area: post-2;
         }
         &.post-3 {
-            grid-area: area3;
+            grid-area: post-3;
         }
         &.post-4 {
-            grid-area: area4;
+            grid-area: post-4;
         }
-        margin: 16px;
-        // width: 46%;
+        margin: 16px; // width: 46%;
         display: inline-block;
         .post-heading {
             .post-date {
@@ -234,15 +237,20 @@ ol {
             opacity: 0;
             text-align: right;
             transition: 0.1s ease-in;
-            ul {
+             .mobile-nav-links {
                 list-style: none;
                 background-color: @primary-blue;
                 margin: 0;
-                li {
+                .mobile-nav-link, a{
+                    display: block;
+                    color: @white;
                     font-size: 14px;
                     padding: 16px;
                     &.active {
                         background-color: darken(@primary-blue, 20%);
+                    }
+                    &:focus, &:hover {
+                        text-decoration: none;
                     }
                 }
             }
@@ -275,11 +283,17 @@ ol {
     .content {
         width: 96%;
         padding: 16px;
+    }
+    .home {
         grid-template-areas: "about" "carousel" "news";
         grid-template-rows: 1fr;
         grid-template-columns: 1fr;
         grid-column-gap: 16px;
         grid-row-gap: 16px;
+    }
+    .news-container {
+        grid-template-areas: "post-1" "post-2" "post-3" "post-4";
+        grid-template-columns: 1fr;
     }
     .news {
         .news-post {

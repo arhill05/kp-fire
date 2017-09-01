@@ -10,11 +10,16 @@ class Carousel extends Component {
         let counter = 1;
         this.state = {
             imgSrc: img1,
-            imgCounter: counter
+            imgCounter: counter,
+            interval: null
         };
     }
     componentDidMount() {
-        setInterval(this.changeImgSrc, 5000);
+        this.setState({interval: setInterval(this.changeImgSrc, 5000)});
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.state.interval);
     }
 
     changeImgSrc = () => {

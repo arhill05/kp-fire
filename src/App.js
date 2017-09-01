@@ -1,12 +1,17 @@
 import React, {Component} from 'react';
+import {BrowserRouter as Router, Route} from 'react-router-dom';
+
 import 'whatwg-fetch';
 import "./bootstrap.min.css";
 import './App.css';
 import '../node_modules/font-awesome/css/font-awesome.min.css';
+
 import Header from './components/Header';
-import Carousel from './components/Carousel';
-import Post from './components/Post'
+import Home from './components/Home';
+import Team from './components/Team';
+
 import PostModel from './models/post'
+
 const logoLarge = require('./img/KPFIRE.png');
 
 class App extends Component {
@@ -37,52 +42,49 @@ class App extends Component {
   }
 
   render() {
-    const posts = this
-      .state
-      .posts
-      .sort((a, b) => {
-        return new Date(b.date) - new Date(a.date);
-      })
-      .map((post, index) => {
-        return <Post index={index} key={index} post={post}/>
-      })
     return (
-      <div>
-        <Header/>
-        <div className="logo">
-          <img src={logoLarge} alt="KP FIRE"/>
-        </div>
-        <div className="content">
-          <Carousel/>
-          <div className="about">
-            <h1>WE ARE KP FiRE</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc at nisl dui.
-              Aliquam euismod interdum quam vitae faucibus. Ut vitae diam enim. Aliquam ut
-              ornare est. In augue purus, tempor vitae eleifend vitae, tempus ut est.
-              Pellentesque dapibus velit sit amet nibh sagittis, sed pellentesque dolor
-              aliquet. Aenean placerat tristique pretium. Phasellus tempus mattis sem sed
-              placerat. Duis vulputate suscipit orci, non blandit libero interdum in. Duis
-              ultricies volutpat dui. Etiam magna felis, ullamcorper eu arcu non, congue
-              rhoncus nisl. Cras ornare mauris dolor, quis commodo ipsum vestibulum sit amet.
-              In et nunc id magna rutrum ultricies porttitor at sapien. Sed ac nulla non diam
-              tincidunt fermentum.</p>
+      <Router>
+        <div>
+          <Header/>
+          <div className="logo">
+            <img src={logoLarge} alt="KP FIRE"/>
           </div>
-          <div className="news">
-            <h2>News</h2>
-            <div className="news-container">
-              {posts}
+          <div className="content">
+
+            <div>
+              <Route exact path="/" component={Home}/>
+              <Route path="/team/:teamId" component={Team}/>
+              <Route
+                exact
+                path="/contacts"
+                render={() => (
+                <h3>Coming soon.</h3>
+              )}/>
+              <Route
+                exact
+                path="/calendar"
+                render={() => (
+                <h3>Coming soon.</h3>
+              )}/>
+              <Route
+                exact
+                path="/kearstin-parker"
+                render={() => (
+                <h3>Coming soon.</h3>
+              )}/>
+            </div>
+
+          </div>
+          <div className="footer">
+            <div className="copyright">© KP Fire Softball 2017</div>
+            <div className="social-media">
+              <a href="https://www.facebook.com/KPFiRE/">
+                <i className="fa fa-facebook" aria-hidden="true"></i>
+              </a>
             </div>
           </div>
         </div>
-        <div className="footer">
-          <div className="copyright">© KP Fire Softball 2017</div>
-          <div className="social-media">
-            <a href="https://www.facebook.com/KPFiRE/">
-              <i className="fa fa-facebook" aria-hidden="true"></i>
-            </a>
-          </div>
-        </div>
-      </div>
+      </Router>
     );
   }
 }
