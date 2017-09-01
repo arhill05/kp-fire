@@ -44,6 +44,9 @@ ol {
   background-color: #3b6690;
   text-decoration: none;
 }
+.header .nav-links a:focus {
+  text-decoration: none;
+}
 .content {
   padding: 32px;
   background-color: #fcfcfc;
@@ -168,11 +171,23 @@ ol {
 .carousel-indicators li.active {
   border: 2px solid #4A80B4;
 }
+.calendar-container {
+  height: 80vh;
+}
 @media screen and (max-width: 768px) {
   h1,
   h2,
   h3 {
     text-align: center;
+  }
+  .rbc-agenda-time-cell,
+  .rbc-agenda-date-cell,
+  .rbc-agenda-event-cell {
+    padding-left: 1px !important;
+    padding-right: 1px !important;
+  }
+  .rbc-toolbar {
+    display: none !important;
   }
   #carousel {
     width: 100%;
@@ -208,6 +223,7 @@ ol {
     top: 8vh;
     right: 0;
     opacity: 0;
+    display: none;
     text-align: right;
     transition: 0.1s ease-in;
   }
@@ -234,6 +250,7 @@ ol {
     text-decoration: none;
   }
   .mobile-nav .expand {
+    display: block;
     transition: all 0.1s ease;
     opacity: 1 !important;
   }

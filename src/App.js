@@ -5,12 +5,12 @@ import 'whatwg-fetch';
 import "./bootstrap.min.css";
 import './App.css';
 import '../node_modules/font-awesome/css/font-awesome.min.css';
+import '../node_modules/react-big-calendar/lib/css/react-big-calendar.css'
 
 import Header from './components/Header';
 import Home from './components/Home';
 import Team from './components/Team';
-
-import PostModel from './models/post'
+import Calendar from './components/Calendar';
 
 const logoLarge = require('./img/KPFIRE.png');
 
@@ -23,22 +23,7 @@ class App extends Component {
   }
 
   componentDidMount = () => {
-    fetch('http://dev.andrewhill.io/wordpress/wp-json/wp/v2/posts/?per_page=4')
-      .then(function (res) {
-        return res.json()
-      })
-      .then(json => {
-        let posts = [];
-        json.forEach(post => {
-          fetch('http://dev.andrewhill.io/wordpress/wp-json/wp/v2/users/' + post.author).then(response => {
-            return response.json()
-          }).then(json => {
-            return posts.push(new PostModel(post.title.rendered, post.date, json.name, post.content.rendered));
-          }).then(() => {
-            this.setState({posts});
-          })
-        })
-      })
+    
   }
 
   render() {
@@ -63,9 +48,7 @@ class App extends Component {
               <Route
                 exact
                 path="/calendar"
-                render={() => (
-                <h3>Coming soon.</h3>
-              )}/>
+                component={Calendar}/>
               <Route
                 exact
                 path="/kearstin-parker"
